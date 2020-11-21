@@ -7,9 +7,6 @@ public class Company {
 	private ArrayList<Debt> myDebts;
 	private String compName;
 	
-	
-	
-	
 	public Company(String name) {
 		compName = name;
 		myDebts = new ArrayList<Debt>();

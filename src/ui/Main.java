@@ -30,7 +30,6 @@ public class Main extends Application {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.setTitle("Cuentas por pagar");
-		//cuentasGUI.loadUserWindow(null);
 		stage.show();
 		stage.sizeToScene();
 		

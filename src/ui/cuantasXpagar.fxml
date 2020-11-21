@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -14,87 +16,110 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
-    <Tab text="Agregar">
+    <Tab fx:id="tabAdd" text="Agregar">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextField layoutX="160.0" layoutY="134.0" promptText="Ej: 150000" />
+                  <TextField fx:id="txtAddMonto" layoutX="160.0" layoutY="126.0" promptText="Ej: 150000" />
                   <Label layoutX="127.0" layoutY="22.0" prefHeight="39.0" prefWidth="331.0" text="Agregar cuenta por pagar" textOverrun="CENTER_ELLIPSIS">
                      <font>
                         <Font name="System Italic" size="27.0" />
                      </font>
                   </Label>
-                  <Label layoutX="60.0" layoutY="86.0" prefHeight="17.0" prefWidth="63.0" text="Nombre:" />
-                  <Label layoutX="60.0" layoutY="138.0" prefHeight="17.0" prefWidth="106.0" text="Monto de pago:" />
-                  <TextField layoutX="160.0" layoutY="82.0" promptText="Ej: prestamo en papeleria.." />
+                  <Label layoutX="60.0" layoutY="86.0" prefHeight="17.0" prefWidth="63.0" text="Codigo:" />
+                  <Label layoutX="60.0" layoutY="130.0" prefHeight="17.0" prefWidth="106.0" text="Monto de pago:" />
+                  <TextField fx:id="txtAddCode" layoutX="160.0" layoutY="82.0" promptText="EJ: 113" />
                   <Label layoutX="60.0" layoutY="221.0" prefHeight="17.0" prefWidth="106.0" text="Fecha limite:" />
-                  <DatePicker layoutX="160.0" layoutY="217.0" prefHeight="25.0" prefWidth="157.0" promptText="EJ: 23/01/2021" />
-                  <Button layoutX="269.0" layoutY="270.0" mnemonicParsing="false" text="Agregar" AnchorPane.bottomAnchor="25.0" />
+                  <DatePicker fx:id="dateAddFechaLimte" layoutX="160.0" layoutY="217.0" prefHeight="25.0" prefWidth="157.0" promptText="EJ: 23/01/2021" />
+                  <Button fx:id="bttnAdd" layoutX="269.0" layoutY="270.0" mnemonicParsing="false" onAction="#addCuenta" text="Agregar" AnchorPane.bottomAnchor="25.0" />
                   <Label layoutX="60.0" layoutY="177.0" text="Proveedor:" />
-                  <TextField layoutX="160.0" layoutY="173.0" promptText="Ej: El Monitor.." />
+                  <TextField fx:id="txtAddProveedor" layoutX="160.0" layoutY="173.0" promptText="Ej: Carvajal" />
+                  <TextField fx:id="NumberOrder" layoutX="462.0" layoutY="271.0" prefHeight="25.0" prefWidth="71.0" />
+                  <Label layoutX="414.0" layoutY="275.0" text="Orden #" />
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Cuentas x Pagar">
+    <Tab fx:id="tabCxP" text="Cuentas x Pagar">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView layoutX="57.0" layoutY="60.0" prefHeight="200.0" prefWidth="268.0" AnchorPane.leftAnchor="57.0" AnchorPane.rightAnchor="193.0" AnchorPane.topAnchor="60.0">
+                  <TableView fx:id="tableViewCxP" layoutX="14.0" layoutY="128.0" prefHeight="212.0" prefWidth="384.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="128.0">
                     <columns>
-                      <TableColumn prefWidth="105.0" text="Nombre" />
-                      <TableColumn prefWidth="73.0" text="Monto" />
-                        <TableColumn prefWidth="97.0" text="Proveedor" />
-                        <TableColumn prefWidth="75.0" text="Fecha limite" />
+                        <TableColumn fx:id="columNumerOrder" prefWidth="54.0" text="#Orden" />
+                      <TableColumn fx:id="columCodeCxP" prefWidth="73.0" text="Codigo" />
+                      <TableColumn fx:id="columMontoCxP" prefWidth="78.0" text="Monto" />
+                        <TableColumn fx:id="columProveedorCxP" prefWidth="64.0" text="Proveedor" />
+                        <TableColumn fx:id="columFechaCxP" prefWidth="115.0" text="Fecha limite" />
                     </columns>
                   </TableView>
-                  <Label layoutX="187.0" layoutY="14.0" text="Cuentas por pagar">
+                  <Label layoutX="98.0" layoutY="22.0" text="Cuentas por pagar">
                      <font>
                         <Font name="System Italic" size="27.0" />
                      </font>
                   </Label>
-                  <Button disable="true" layoutX="479.0" layoutY="244.0" mnemonicParsing="false" text="Modificar" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f1ff1f" height="10.0" layoutX="414.0" layoutY="115.0" stroke="BLACK" strokeType="INSIDE" width="11.0" />
+                  <Button fx:id="btnModificar" disable="true" layoutX="479.0" layoutY="244.0" mnemonicParsing="false" onAction="#modificarCuenta" text="Modificar" />
                   <Label layoutX="463.0" layoutY="79.0" text="Cuentas vencidas" underline="true" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff761f" height="10.0" layoutX="414.0" layoutY="135.0" stroke="BLACK" strokeType="INSIDE" width="11.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="414.0" layoutY="155.0" stroke="BLACK" strokeType="INSIDE" width="11.0" />
                   <Label layoutX="447.0" layoutY="111.0" text="30 dias de vencimineto" />
                   <Label layoutX="447.0" layoutY="131.0" text="60 dias de vencimineto" />
                   <Label layoutX="447.0" layoutY="151.0" text="90+ dias de vencimineto" />
+                  <TextField fx:id="txtFiledSearch" layoutX="121.0" layoutY="75.0" prefHeight="25.0" prefWidth="172.0" />
+                  <Button fx:id="btnSearch" layoutX="335.0" layoutY="75.0" mnemonicParsing="false" text="Buscar" />
+                  <MenuButton fx:id="menuToSearch" layoutX="14.0" layoutY="75.0" mnemonicParsing="false">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </MenuButton>
+                  <Button layoutX="415.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a40505" height="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                     </graphic>
+                  </Button>
+                  <Button layoutX="415.0" layoutY="135.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dd5a02" height="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                     </graphic>
+                  </Button>
+                  <Button layoutX="415.0" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8b900" height="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                     </graphic>
+                  </Button>
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab text="Modificar">
+      <Tab fx:id="tabRegistro" text="Registro">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tableViewRegistro" layoutX="36.0" layoutY="24.0" prefHeight="200.0" prefWidth="543.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
+                    <columns>
+                      <TableColumn fx:id="columDateR" text="Fecha" />
+                      <TableColumn fx:id="columAccionR" prefWidth="89.0" text="Accion" />
+                        <TableColumn fx:id="columCodeR" prefWidth="106.0" text="Codigo" />
+                        <TableColumn fx:id="columMontoR" prefWidth="90.0" text="Monto" />
+                        <TableColumn fx:id="columProveedorR" prefWidth="75.0" text="Proveedor" />
+                        <TableColumn fx:id="columFechaR" prefWidth="103.0" text="Fecha Limite" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab fx:id="tabMod" disable="true" text="Modificar">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Label layoutX="48.0" layoutY="67.0" />
                   <Label layoutX="60.0" layoutY="67.0" text="Nombre:" />
-                  <TextField editable="false" layoutX="160.0" layoutY="63.0" />
+                  <TextField fx:id="txtModNombre" editable="false" layoutX="160.0" layoutY="63.0" />
                   <Label layoutX="60.0" layoutY="125.0" text="Monto de pago:" />
-                  <TextField layoutX="160.0" layoutY="121.0" />
+                  <TextField fx:id="txtModMonto" layoutX="160.0" layoutY="121.0" />
                   <Label layoutX="60.0" layoutY="235.0" text="Fecha limite:" />
-                  <Button layoutX="243.0" layoutY="276.0" mnemonicParsing="false" text="Confirmar" />
-                  <DatePicker layoutX="157.0" layoutY="231.0" prefHeight="26.0" prefWidth="159.0" />
+                  <Button fx:id="btnConfirmarMod" layoutX="243.0" layoutY="276.0" mnemonicParsing="false" onAction="#confirmarMod" text="Confirmar" />
+                  <DatePicker fx:id="dateModFechaLimite" layoutX="157.0" layoutY="231.0" prefHeight="26.0" prefWidth="159.0" />
                   <Label layoutX="60.0" layoutY="183.0" text="Proveedor:" />
-                  <TextField editable="false" layoutX="160.0" layoutY="179.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </Tab>
-      <Tab text="Registro">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <TableView layoutX="36.0" layoutY="24.0" prefHeight="200.0" prefWidth="543.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
-                    <columns>
-                      <TableColumn text="Fecha" />
-                      <TableColumn prefWidth="89.0" text="Accion" />
-                        <TableColumn prefWidth="106.0" text="Nombre" />
-                        <TableColumn prefWidth="90.0" text="Monto" />
-                        <TableColumn prefWidth="75.0" text="Proveedor" />
-                        <TableColumn prefWidth="103.0" text="Fecha Limite" />
-                    </columns>
-                  </TableView>
+                  <TextField fx:id="txtModProveedor" editable="false" layoutX="160.0" layoutY="179.0" />
                </children>
             </AnchorPane>
         </content>
