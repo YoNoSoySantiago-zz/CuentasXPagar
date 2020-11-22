@@ -1,47 +1,50 @@
 package model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
 
-public class Debt {
+public class Debt implements Serializable{
 	
 	private double amountToPay;
-	private int debtCode;
+	private int numberOrder;
+	private String debtCode;
 	private String provider;
-	private Date dateToPay;
+	private LocalDate dateToPay;
 	private boolean paidStatus;
 	
 	
-	public Debt(double amountToPay, int debtCode, String provider, Date dateToPay) {
+	public Debt(double amountToPay,int numberOrder, String debtCode, String provider, LocalDate dateToPay) {
 		
 		super();
 		this.amountToPay = amountToPay;
 		this.debtCode = debtCode;
 		this.provider = provider;
 		this.dateToPay = dateToPay;
+		this.numberOrder = numberOrder;
 		paidStatus = false;
 	}
 	public double getAmountToPay() {
 		return amountToPay;
 	}
-	public int getDebtCode() {
+	public String getDebtCode() {
 		return debtCode;
 	}
 	public String getProvider() {
 		return provider;
 	}
-	public Date getDateToPay() {
+	public LocalDate getDateToPay() {
 		return dateToPay;
 	}
 	public void setAmountToPay(double amountToPay) {
 		this.amountToPay = amountToPay;
 	}
-	public void setDebtCode(int debtCode) {
+	public void setDebtCode(String debtCode) {
 		this.debtCode = debtCode;
 	}
 	public void setProvider(String provider) {
 		this.provider = provider;
 	}
-	public void setDateToPay(Date dateToPay) {
+	public void setDateToPay(LocalDate dateToPay) {
 		this.dateToPay = dateToPay;
 	}
 	public void setPaidStatus(boolean d) {
@@ -49,6 +52,9 @@ public class Debt {
 	}
 	public boolean getPaidStatus() {
 		return paidStatus;
+	}
+	public int getNumberOrder() {
+		return numberOrder;
 	}
 	
 	

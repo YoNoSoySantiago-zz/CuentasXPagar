@@ -15,15 +15,13 @@ public class Main extends Application {
 	
 	
 	public static void main(String[] args) throws IOException{
-		
 		launch(args);
-		
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("cuantasXpagar.fxml"));
-
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("welcomeFX.fxml"));
+		cuentasGUI = new CuentasGUI(stage);
 		loader.setController(cuentasGUI);
 		Parent root = loader.load();
 
@@ -32,6 +30,7 @@ public class Main extends Application {
 		stage.setTitle("Cuentas por pagar");
 		stage.show();
 		stage.sizeToScene();
+		cuentasGUI.init();
 		
 	}
 
