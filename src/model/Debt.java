@@ -23,6 +23,9 @@ public class Debt implements Serializable{
 		this.numberOrder = numberOrder;
 		paidStatus = false;
 	}
+	public void setNumberOrder(int numberOrder) {
+		this.numberOrder = numberOrder;
+	}
 	public double getAmountToPay() {
 		return amountToPay;
 	}
@@ -55,6 +58,11 @@ public class Debt implements Serializable{
 	}
 	public int getNumberOrder() {
 		return numberOrder;
+	}
+	public Debt clone() {
+		Debt debtCloned = new Debt(amountToPay, numberOrder, debtCode, provider, dateToPay);
+		debtCloned.setPaidStatus(paidStatus);
+		return debtCloned;
 	}
 	
 	

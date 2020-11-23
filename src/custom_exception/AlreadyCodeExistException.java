@@ -10,7 +10,6 @@ public class AlreadyCodeExistException extends Exception{
 		alert.setTitle("ERROR");
 		alert.setHeaderText("CxP");
 		alert.setContentText("Codigo existente");
-
 		alert.showAndWait();
 	}
 
