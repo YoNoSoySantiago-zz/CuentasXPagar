@@ -33,11 +33,18 @@ public class Company implements Serializable{
 		Record record = new Record(debt, "Crear");
 		records.add(record);
 	}
+	public void delateDebt(Debt debt) {
+		int index = myDebts.indexOf(debt);
+		myDebts.remove(index);
+	}
 	public void modDebt(Debt debt,double amountToPay,String debtCode, String provider, LocalDate dateToPay) {
 		debt.setAmountToPay(amountToPay);
 		debt.setDebtCode(debtCode);
 		debt.setProvider(provider);
 		debt.setDateToPay(dateToPay);
+		if(amountToPay==0) {
+			delateDebt( debt);
+		}
 		Record record = new Record(debt, "Modificar");
 		records.add(record);
 	}
@@ -124,7 +131,7 @@ public class Company implements Serializable{
 		return result;
 	}
 	public ArrayList<Debt> ninetyDaysDebts(){
-		LocalDate date = LocalDate.now().plusDays(91);
+		//LocalDate date = LocalDate.now().plusDays(91);
 		LocalDate date2 = LocalDate.now().plusDays(60);
 		ArrayList<Debt>  result = new ArrayList<>();
 		for (int i = 0; i < myDebts.size(); i++) {

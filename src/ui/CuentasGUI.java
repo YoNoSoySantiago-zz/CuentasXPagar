@@ -27,14 +27,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import model.Company;
 import model.Debt;
 import model.Record;
@@ -43,9 +46,9 @@ public class CuentasGUI {
 	//Start
 	@FXML
 	private BorderPane mainPane;
-
+	
+	
 	//Company
-
 	@FXML
 	private TabPane myTabPane;
 
@@ -167,7 +170,7 @@ public class CuentasGUI {
 	private Stage window;
 	private Company currentCompany;
 
-	public static final String FILE_NAME = "allCompanies.data";
+	public static final String FILE_NAME = "data/allCompanies.data";
 
 	@SuppressWarnings("unchecked")
 	public CuentasGUI(Stage w) {
@@ -199,22 +202,17 @@ public class CuentasGUI {
 	@FXML
 	void addCuenta(ActionEvent event) throws ValuesIsEmptyException {
 		if(txtAddCode.getText().isEmpty()||txtAddMonto.getText().isEmpty()||txtAddProveedor.getText().isEmpty()||dateAddFechaLimte.getValue()==null) {
-			try {
-				throw new ValuesIsEmptyException();
-			}catch(ValuesIsEmptyException e) {
-				
-			}
+			throw new ValuesIsEmptyException();
 		}
 		if(dateAddFechaLimte.getValue().isBefore(LocalDate.now())) {
-			try {
-				throw new ValuesIsEmptyException();
-			}catch(ValuesIsEmptyException e) {
-				
-			}
+			throw new ValuesIsEmptyException();
 		}
 		double amountToPay=0;
 		try {
 			amountToPay = Double.parseDouble(txtAddMonto.getText());
+			if(amountToPay<0) {
+				throw new ValuesIsEmptyException();
+			}
 			String debtCode = txtAddCode.getText();
 			String provider = txtAddProveedor.getText();
 			LocalDate dateToPay = dateAddFechaLimte.getValue();
@@ -222,6 +220,7 @@ public class CuentasGUI {
 			txtAddCode.clear();
 			txtAddMonto.clear();
 			txtAddProveedor.clear();
+			dateAddFechaLimte.setValue(null);
 		}catch(NumberFormatException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
@@ -257,22 +256,30 @@ public class CuentasGUI {
 	void confirmarMod(Event event) throws ValuesIsEmptyException  {
 
 		if(txtModCodigo.getText().isEmpty()||txtModMonto.getText().isEmpty()||txtModProveedor.getText().isEmpty()||dateModFechaLimite.getValue()==null) {
-			try {
-				throw new ValuesIsEmptyException();
-			}catch(ValuesIsEmptyException e) {
-				
-			}
+			throw new ValuesIsEmptyException();
 		}
-		if(dateModFechaLimite.getValue().isBefore(LocalDate.now())) {
-			try {
-				throw new ValuesIsEmptyException();
-			}catch(ValuesIsEmptyException e) {
-				
-			}
-		}
+		
+//		if(dateModFechaLimite.getValue().isBefore(LocalDate.now())) {
+//			throw new ValuesIsEmptyException();
+//		}
 		double amountToPay=0;
 		try {
 			amountToPay = Double.parseDouble(txtModMonto.getText());
+			if(amountToPay<0) {
+				throw new ValuesIsEmptyException();
+			}
+			String debtCode = txtModCodigo.getText();
+			String provider = txtModProveedor.getText();
+			LocalDate dateToPay = dateModFechaLimite.getValue();
+			currentCompany.modDebt(tableViewCxP.getSelectionModel().getSelectedItem(), amountToPay, debtCode, provider, dateToPay);
+			txtModCodigo.clear();
+			txtModMonto.clear();
+			txtModProveedor.clear();
+			
+			tableViewCxP.getItems().clear();
+			inicializateTv(currentCompany.getMyDebts());
+			myTabPane.getSelectionModel().select(tabCxP);
+			tabMod.setDisable(true);
 		}catch(NumberFormatException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
@@ -280,18 +287,7 @@ public class CuentasGUI {
 			alert.setContentText("Utiliza solamente numeros con '.' como separador decimal ");
 			alert.showAndWait();
 		}
-		String debtCode = txtModCodigo.getText();
-		String provider = txtModProveedor.getText();
-		LocalDate dateToPay = dateAddFechaLimte.getValue();
-		currentCompany.modDebt(tableViewCxP.getSelectionModel().getSelectedItem(), amountToPay, debtCode, provider, dateToPay);
-		txtModCodigo.clear();
-		txtModMonto.clear();
-		txtModProveedor.clear();
 		
-		tableViewCxP.getItems().clear();
-		inicializateTv(currentCompany.getMyDebts());
-		myTabPane.getSelectionModel().select(tabCxP);
-		tabMod.setDisable(true);
 
 
 		
@@ -330,16 +326,33 @@ public class CuentasGUI {
 		
 		ObservableList<Debt> observableList;
 		observableList = FXCollections.observableArrayList(ds);
-
 		tableViewCxP.setItems(observableList);
 		columNumerOrderCxP.setCellValueFactory(new PropertyValueFactory<Debt, Integer>("numberOrder"));
 		columCodeCxP.setCellValueFactory(new PropertyValueFactory<Debt, String>("debtCode"));
 		columMontoCxP.setCellValueFactory(new PropertyValueFactory<Debt, Double>("amountToPay"));
 		columProveedorCxP.setCellValueFactory(new PropertyValueFactory<Debt, String>("provider"));
 		columFechaCxP.setCellValueFactory(new PropertyValueFactory<Debt,LocalDate >("dateToPay"));
-
-
+		columFechaCxP.setCellFactory(new Callback<TableColumn<Debt, LocalDate>, TableCell<Debt, LocalDate>>(){
+	        @Override
+	        public TableCell<Debt, LocalDate> call(TableColumn<Debt, LocalDate> param) {
+	            return new TableCell<Debt, LocalDate>(){
+	                @Override
+	                protected void updateItem(LocalDate item, boolean empty) {
+	                	if (item!=null){ 
+	                		this.setTextFill(Color.BLACK);
+		                	if(item.isBefore(LocalDate.now())) {
+		                		this.setTextFill(Color.RED);
+		                	}
+		                	setText(item.toString());
+	                        
+	                	}
+	                }
+	            };
+	        }
+		});	
+		
 	}
+	
 
 	@FXML
 	void onTabCxP(Event event) {
@@ -392,11 +405,16 @@ public class CuentasGUI {
 			throw new ValuesIsEmptyException();
 		}
 		currentCompany = new Company(txtCompanyName.getText());
+		boolean found = false;
 		for (int i = 0; i < allCompanies.size(); i++) {
 			if(allCompanies.get(i).getCompName().equalsIgnoreCase(txtCompanyName.getText())){
 				currentCompany = allCompanies.get(i);
+				found = true;
 				break;
 			}
+		}
+		if(!found) {
+			allCompanies.add(currentCompany);
 		}
 		try {
 			loadCxP();
@@ -409,7 +427,6 @@ public class CuentasGUI {
 
 	@FXML
 	public void btnSearch(ActionEvent event) throws ValuesIsEmptyException {
-		System.out.println("metodo");
 		if(!menuToSearch.getSelectionModel().getSelectedItem().isEmpty()) {
 			String search = menuToSearch.getSelectionModel().getSelectedItem();
 
@@ -435,7 +452,32 @@ public class CuentasGUI {
 			
 		}
 	}
+	
 
+    @FXML
+    void onCombobox(ActionEvent event) {
+    	String value = menuToSearch.getSelectionModel().getSelectedItem();
+    	switch(value) {
+    	case Company.CODE:
+    		txtFiledSearch.setPromptText("Ej: 117");
+    		break;
+    	case Company.DATE:
+    		txtFiledSearch.setPromptText("Formato: YYYY-MM-DD");
+    		break;
+    	case Company.ORDER:
+    		txtFiledSearch.setPromptText("Ej: 5");
+    		break;
+    	case Company.PROVIDER:
+    		txtFiledSearch.setPromptText("Ej: Carvajal");
+    		break;
+    	}
+    }
+    
+    @FXML
+    void onRefresh(Event  event) {
+    	tableViewCxP.getItems().clear();
+    	inicializateTv(currentCompany.getMyDebts());
+    }
 
 
 	//Loads
@@ -457,6 +499,7 @@ public class CuentasGUI {
 		menuToSearch.getItems().removeAll();
 		menuToSearch.getItems().addAll(Company.CODE,Company.ORDER,Company.PROVIDER,Company.DATE);
 		menuToSearch.getSelectionModel().select(Company.CODE);;
+		onCombobox(null);
 	}
 
 	private void saveInfo() throws FileNotFoundException, IOException {

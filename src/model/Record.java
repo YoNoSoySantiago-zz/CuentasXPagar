@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Record {
+@SuppressWarnings("serial")
+public class Record implements Serializable{
 	private Debt debt;
 	private String action;
 	private LocalDateTime time;

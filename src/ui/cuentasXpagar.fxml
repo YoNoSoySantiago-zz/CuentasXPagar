@@ -58,28 +58,34 @@
                      </font>
                   </Label>
                   <Button fx:id="btnModificar" layoutX="479.0" layoutY="244.0" mnemonicParsing="false" onAction="#modificarCuenta" text="Modificar" />
-                  <Label layoutX="463.0" layoutY="79.0" text="Cuentas vencidas" underline="true" />
-                  <Label layoutX="444.0" layoutY="110.0" prefHeight="18.0" prefWidth="140.0" text="30 dias de vencimineto" />
-                  <Label layoutX="444.0" layoutY="135.0" text="60 dias de vencimineto" />
-                  <Label layoutX="444.0" layoutY="160.0" text="90+ dias de vencimineto" />
+                  <Label layoutX="295.0" layoutY="107.0" text="Cuentas vencidas" textFill="RED" underline="true" />
+                  <Label layoutX="444.0" layoutY="128.0" prefHeight="18.0" prefWidth="185.0" text="menos de 30 dias de vencimineto" />
+                  <Label layoutX="444.0" layoutY="153.0" text="entre 30 y 60 dias de vencimineto" />
+                  <Label layoutX="444.0" layoutY="178.0" text="60+ dias de vencimineto" />
                   <TextField fx:id="txtFiledSearch" layoutX="121.0" layoutY="75.0" prefHeight="25.0" prefWidth="172.0" />
                   <Button fx:id="btnSearch" layoutX="315.0" layoutY="73.0" mnemonicParsing="false" onAction="#btnSearch" text="Buscar" />
-                  <Button fx:id="btnShow30days" layoutX="425.0" layoutY="115.0" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#btnShow30days" prefHeight="10.0" prefWidth="10.0">
+                  <Button fx:id="btnShow30days" layoutX="425.0" layoutY="133.0" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#btnShow30days" prefHeight="10.0" prefWidth="10.0">
                      <graphic>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a40505" height="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
                      </graphic>
                   </Button>
-                  <Button fx:id="btnShow60days" layoutX="425.0" layoutY="140.0" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#btnShow60days" prefHeight="10.0" prefWidth="10.0">
+                  <Button fx:id="btnShow60days" layoutX="425.0" layoutY="158.0" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#btnShow60days" prefHeight="10.0" prefWidth="10.0">
                      <graphic>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dd5a02" height="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
                      </graphic>
                   </Button>
-                  <Button fx:id="btnShow90ays" layoutX="425.0" layoutY="165.0" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#btnShow90ays" prefHeight="10.0" prefWidth="10.0">
+                  <Button fx:id="btnShow90ays" layoutX="425.0" layoutY="183.0" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#btnShow90ays" prefHeight="10.0" prefWidth="10.0">
                      <graphic>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8b900" height="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
                      </graphic>
                   </Button>
-                  <ComboBox fx:id="menuToSearch" layoutX="14.0" layoutY="75.0" prefHeight="25.0" prefWidth="91.0" />
+                  <ComboBox fx:id="menuToSearch" layoutX="14.0" layoutY="75.0" onAction="#onCombobox" prefHeight="25.0" prefWidth="91.0" />
+                  <Label layoutX="444.0" layoutY="207.0" text="refrescar" underline="true" />
+                  <Button fx:id="btnShow90ays1" layoutX="425.0" layoutY="211.0" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#onRefresh" prefHeight="10.0" prefWidth="10.0">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45ff0d" height="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                     </graphic>
+                  </Button>
                </children></AnchorPane>
       </content>
     </Tab>
