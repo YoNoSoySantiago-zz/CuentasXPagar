@@ -527,4 +527,81 @@ public class CuentasGUI {
 		});
 
 	}
+
+
+    @FXML
+    private TextField txtPayNumberOrder;
+
+    @FXML
+    private TextField txtPayCode;
+
+    @FXML
+    private TextField txtPayAmountPay;
+
+    @FXML
+    private TextField txtPayProvider;
+
+    @FXML
+    private DatePicker datePayDate;
+
+    @FXML
+    private Button pay;
+    
+    @FXML
+    private Button btnPagar;
+    
+    @FXML
+    private Tab tabPay;
+    
+    @FXML
+    void toOnPay(ActionEvent event) {
+    	System.out.println("1");
+		if (tableViewCxP.getSelectionModel().getSelectedItem()!=null){
+			System.err.println("2");
+			myTabPane.getSelectionModel().select(tabPay);
+			tabPay.setDisable(false);
+			Debt temp = tableViewCxP.getSelectionModel().getSelectedItem();
+
+			txtPayNumberOrder.setText(""+temp.getNumberOrder());
+			txtPayCode.setText(temp.getDebtCode());
+			txtPayAmountPay.setPromptText("debe: "+temp.getAmountToPay());
+			txtPayProvider.setText(temp.getProvider());
+			datePayDate.setValue(temp.getDateToPay());
+		} 
+    }
+
+    @FXML
+    void toPay(Event event) throws ValuesIsEmptyException {
+    	double amountToPay=0;
+		try {
+			amountToPay = Double.parseDouble(txtPayAmountPay.getText());
+			if(amountToPay<0) {
+				throw new ValuesIsEmptyException();
+			}
+			double sobra =currentCompany.pay(tableViewCxP.getSelectionModel().getSelectedItem(), amountToPay);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("INFORMATION");
+			alert.setHeaderText("PAY");
+			alert.setContentText("Devuelve $"+sobra);
+			alert.showAndWait();
+			txtPayCode.clear();
+			txtPayAmountPay.clear();
+			txtPayProvider.clear();
+			
+			tableViewCxP.getItems().clear();
+			inicializateTv(currentCompany.getMyDebts());
+			myTabPane.getSelectionModel().select(tabCxP);
+			tabPay.setDisable(true);
+		}catch(NumberFormatException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setHeaderText("CxP");
+			alert.setContentText("Utiliza solamente numeros con '.' como separador decimal ");
+			alert.showAndWait();
+		}
+    }
+    @FXML
+    void onTabPay(Event event) {
+    	
+    }
 }

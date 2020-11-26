@@ -3,6 +3,9 @@ package model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 import custom_exception.ValuesIsEmptyException;
 
@@ -10,7 +13,7 @@ import custom_exception.ValuesIsEmptyException;
 public class Company implements Serializable{
 	
 	private ArrayList<Debt> myDebts;
-	private ArrayList<Record> records;
+	private Stack<Record> records;
 	private String compName;
 	private int currentNumber;
 	
@@ -22,7 +25,7 @@ public class Company implements Serializable{
 	public Company(String name) {
 		compName = name;
 		myDebts = new ArrayList<Debt>();
-		records = new ArrayList<Record>();
+		records = new Stack<Record>();
 		currentNumber = 1;
 	}
 	
@@ -42,11 +45,28 @@ public class Company implements Serializable{
 		debt.setDebtCode(debtCode);
 		debt.setProvider(provider);
 		debt.setDateToPay(dateToPay);
-		if(amountToPay==0) {
-			delateDebt( debt);
-		}
 		Record record = new Record(debt, "Modificar");
+		if(amountToPay==0) {
+			
+		}
+		
 		records.add(record);
+	}
+	
+	public double pay(Debt debt,double amountToPay) {
+		double amountBefore = debt.getAmountToPay();
+		double real = (amountBefore - amountToPay);
+		double sobra = 0;
+		Record record = new Record(debt, "Abonado");
+		if(real<=0) {
+			sobra =  real<0?real*-1:real;
+			real = 0;
+			delateDebt( debt);
+			record = new Record(debt, "Pagado");
+		}
+		records.add(record);
+		debt.setAmountToPay(real);
+		return sobra;
 	}
 	public ArrayList<Debt> getMyDebts() {
 		return myDebts;
@@ -143,7 +163,11 @@ public class Company implements Serializable{
 	}
 
 	public ArrayList<Record> getRecord() {
-		return records;
+		ArrayList<Record> currentRecord = new ArrayList<>();
+		for (Record record :records) {
+			currentRecord.add(record);
+		}
+		return currentRecord;
 	}
 
 }

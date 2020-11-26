@@ -86,6 +86,7 @@
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45ff0d" height="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
                      </graphic>
                   </Button>
+                  <Button fx:id="btnPagar" layoutX="484.0" layoutY="283.0" mnemonicParsing="false" onAction="#toOnPay" text="Pagar" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -124,6 +125,25 @@
                   <TextField fx:id="txtModProveedor" layoutX="160.0" layoutY="179.0" />
                   <Label layoutX="60.0" layoutY="29.0" text="Orden#" />
                   <TextField fx:id="txtModNumberOrder" disable="true" editable="false" layoutX="113.0" layoutY="25.0" prefHeight="26.0" prefWidth="47.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab fx:id="tabPay" disable="true" onSelectionChanged="#onTabPay" text="Pagar">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="40.0" layoutY="34.0" text="Orden#" />
+                  <Label layoutX="40.0" layoutY="84.0" text="Codigo:" />
+                  <TextField fx:id="txtPayNumberOrder" disable="true" layoutX="93.0" layoutY="30.0" prefHeight="25.0" prefWidth="61.0" />
+                  <TextField fx:id="txtPayCode" disable="true" layoutX="136.0" layoutY="80.0" prefHeight="25.0" prefWidth="110.0" />
+                  <Label layoutX="40.0" layoutY="141.0" text="Proveedor" />
+                  <TextField fx:id="txtPayAmountPay" layoutX="136.0" layoutY="231.0" prefHeight="25.0" prefWidth="110.0" />
+                  <Label layoutX="40.0" layoutY="235.0" text="Monto a pagar" />
+                  <TextField fx:id="txtPayProvider" disable="true" layoutX="136.0" layoutY="137.0" prefHeight="25.0" prefWidth="110.0" />
+                  <Label layoutX="43.0" layoutY="189.0" text="Fecha limite" />
+                  <DatePicker fx:id="datePayDate" disable="true" layoutX="136.0" layoutY="185.0" prefHeight="25.0" prefWidth="111.0" />
+                  <Button fx:id="pay" layoutX="334.0" layoutY="319.0" mnemonicParsing="false" onAction="#toPay" text="Pagar" />
                </children>
             </AnchorPane>
         </content>
