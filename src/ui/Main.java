@@ -27,7 +27,7 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.sizeToScene();
-		scene.getStylesheets().add(getClass().getResource("iconos.css").toExternalForm());
+		//scene.getStylesheets().add(getClass().getResource("iconos.css").toExternalForm());
 		stage.setScene(scene);
 		stage.centerOnScreen();
 		stage.setResizable(true);
