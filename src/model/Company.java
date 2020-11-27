@@ -1,10 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 import custom_exception.ValuesIsEmptyException;
@@ -27,6 +26,7 @@ public class Company implements Serializable{
 		myDebts = new ArrayList<Debt>();
 		records = new Stack<Record>();
 		currentNumber = 1;
+		
 	}
 	
 	public void addDebt(double amountToPay,String debtCode, String provider, LocalDate dateToPay) {
@@ -34,7 +34,7 @@ public class Company implements Serializable{
 		myDebts.add(debt);
 		currentNumber++;
 		Record record = new Record(debt, "Crear");
-		records.add(record);
+		records.push(record);
 	}
 	public void delateDebt(Debt debt) {
 		int index = myDebts.indexOf(debt);
@@ -50,7 +50,7 @@ public class Company implements Serializable{
 			
 		}
 		
-		records.add(record);
+		records.push(record);
 	}
 	
 	public double pay(Debt debt,double amountToPay) {
@@ -64,7 +64,7 @@ public class Company implements Serializable{
 			delateDebt( debt);
 			record = new Record(debt, "Pagado");
 		}
-		records.add(record);
+		records.push(record);
 		debt.setAmountToPay(real);
 		return sobra;
 	}
